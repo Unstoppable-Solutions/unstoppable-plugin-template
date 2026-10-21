@@ -1,0 +1,39 @@
+name: Deploy to WordPress.org
+
+# Dormant until this plugin is accepted into the WordPress.org directory.
+# Add SVN_USERNAME and SVN_PASSWORD secrets in repo settings before the
+# first release, and update the SLUG value below to match the plugin's
+# WordPress.org slug.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Push to WordPress.org SVN
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: WordPress Plugin Deploy
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: __PLUGIN_SLUG__
+
+      - name: Upload release zip as a GitHub Release asset
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.deploy.outputs.zip-path }}
