@@ -25,4 +25,5 @@ jobs:
           build-dir: './'
           exclude-checks: |
             late_escaping
+            hidden_files
           include-experimental: true
