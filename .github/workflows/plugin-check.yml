@@ -1,5 +1,8 @@
 name: Plugin Check
 
+# Does nothing on the template repo itself (placeholder tokens would fail to parse).
+# Runs normally the moment someone clones the template as their own repo.
+
 on:
   push:
     branches: [main]
@@ -14,6 +17,7 @@ jobs:
   plugin-check:
     name: Run WordPress Plugin Check
     runs-on: ubuntu-latest
+    if: ${{ ! github.event.repository.is_template }}
 
     steps:
       - name: Check out repository
@@ -25,5 +29,14 @@ jobs:
           build-dir: './'
           exclude-checks: |
             late_escaping
-            hidden_files
+          exclude-files: |
+            .gitattributes
+            .gitignore
+            .distignore
+            .github
+            README.md
+            SECURITY.md
+            CONTRIBUTING.md
+            CHANGELOG.md
           include-experimental: true
+
