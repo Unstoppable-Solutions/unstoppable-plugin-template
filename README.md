@@ -12,6 +12,7 @@ A ready-to-fork scaffold for new **Unstoppable Solutions** WordPress plugins. Cl
 - `.github/workflows/deploy-to-wporg.yml` — on a published GitHub Release, auto-deploys to WordPress.org SVN (dormant until the plugin is accepted into the directory)
 - `.distignore` so dev-only files (workflows, README.md, SECURITY.md) don't end up in the WordPress.org zip
 - `.gitignore` with sensible defaults for a PHP / WordPress project
+- `CLAUDE.md` — context for future Claude Code sessions working on the repo (release workflow, prefix / main-file naming, phpcs:ignore conventions)
 - Silence `index.php` in every directory
 
 ## How to use
